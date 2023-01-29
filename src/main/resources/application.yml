@@ -1,0 +1,20 @@
+server:
+  port: 6000
+  shutdown: graceful
+
+spring:
+  application:
+    name: Kotlin Playground
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3308/kotlin_test
+    username: root
+    password:
+
+  liquibase:
+    enabled: false
+    change-log: classpath:/db/changelog/changelog.xml
+
+  profiles:
+    active: prod
