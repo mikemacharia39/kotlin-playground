@@ -1,7 +1,11 @@
 package org.mikehenry.kotlin_playground.domain.entity
 
 import org.mikehenry.kotlin_playground.domain.enumeration.EmployeeType
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
+import javax.persistence.Table
 
 @Entity
 @Table(name = "employee")
