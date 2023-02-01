@@ -1,0 +1,36 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="Mikehenry (generated)" id="202302012300">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="employee"/>
+            </not>
+        </preConditions>
+        <createTable tableName="employee">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="FK-employee-id"/>
+            </column>
+            <column name="first_name" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email_address" type="VARCHAR(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="employee_type" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="employment_status" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dateCreated" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dateModified" type="datetime(6)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
