@@ -2,7 +2,7 @@
 <databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
-    <changeSet author="Mikehenry (generated)" id="202302012300">
+    <changeSet author="Mikehenry" id="202302012300">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="employee"/>
@@ -21,6 +21,9 @@
             <column name="email_address" type="VARCHAR(100)">
                 <constraints unique="true" nullable="false"/>
             </column>
+            <column name="phone_number" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
             <column name="employee_type" type="VARCHAR(20)">
                 <constraints nullable="false"/>
             </column>
@@ -32,5 +35,104 @@
             </column>
             <column name="dateModified" type="datetime(6)"/>
         </createTable>
+    </changeSet>
+
+    <changeSet author="Mikehenry" id="202302102300">
+        <createTable tableName="address">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="FK-address-id"/>
+            </column>
+            <column name="address_type" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address_line_1" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address_line_2" type="VARCHAR(100)"/>
+            <column name="country" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="state" type="VARCHAR(50)"/>
+            <column name="postal_box" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dateCreated" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dateModified" type="datetime(6)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Mikehenry" id="202302102310">
+        <createTable tableName="employee_address">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="FK-employee_address-id"/>
+            </column>
+            <column name="employee_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="employee_id" baseTableName="employee_address"
+                                 constraintName="FK-employee_address-employee_id"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="employee"/>
+        <addForeignKeyConstraint baseColumnNames="address_id" baseTableName="employee_address"
+                                 constraintName="FK-employee_address-address_id"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="address"/>
+    </changeSet>
+
+    <changeSet author="Mikehenry" id="202302110110">
+        <createTable tableName="department">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="FK-department-id"/>
+            </column>
+            <column name="department_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="department_description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dateCreated" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dateModified" type="datetime(6)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Mikehenry" id="202302110130">
+        <createTable tableName="employee_department">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="FK-employee_department-id"/>
+            </column>
+            <column name="employee_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="department_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="employee_id" baseTableName="employee_department"
+                                 constraintName="FK-employee_department-employee_id"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="department_id" baseTableName="employee_department"
+                                 constraintName="FK-employee_department-department_id"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="department"/>
+
     </changeSet>
 </databaseChangeLog>
