@@ -17,8 +17,8 @@ class EmployeeService(
     @Transactional(readOnly = false)
     fun addEmployee(employeeRequestDto: EmployeeRequestDto): EmployeeResponseDto {
         val employee = employeeMapper.mapDtoToEntity(employeeRequestDto)
-        employeeRepository.save(employee)
+        val response = employeeRepository.save(employee)
 
-        return employeeMapper.mapEntityToDto()
+        return employeeMapper.mapEntityToDto(response)
     }
 }
