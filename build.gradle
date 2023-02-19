@@ -1,15 +1,17 @@
 plugins {
     id 'java'
+    id 'checkstyle'
+    id 'idea'
+    id 'jacoco'
     id 'org.springframework.boot' version '2.7.5'
     id 'org.jetbrains.kotlin.jvm' version "$kotlinVersion"
     id 'io.spring.dependency-management' version '1.1.0'
 
     id "org.jetbrains.kotlin.plugin.spring" version "$kotlinVersion"
     id "org.jetbrains.kotlin.plugin.allopen" version "$kotlinVersion"
+    //Creates no empty constructors by default
+    id "org.jetbrains.kotlin.plugin.noarg" version "$kotlinVersion"
 }
-
-sourceSets.getByName("main").java.srcDir("$buildDir/src/main/kotlin")
-sourceSets.test.java.srcDir("src/test/kotlin")
 
 group = "org.mikehenry"
 version = "1.0-SNAPSHOT"
@@ -29,19 +31,31 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation "org.springframework.boot:spring-boot-starter-validation"
     implementation "org.springframework.boot:spring-boot-starter-web"
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
+    implementation "io.swagger:swagger-annotations:1.5.23"
+    implementation "org.zalando:problem-spring-web:$zalandoProblemVersion"
+    implementation "io.github.microutils:kotlin-logging-jvm:3.0.5"
 
     runtimeOnly "org.apache.tomcat.embed:tomcat-embed-core"
     runtimeOnly "org.liquibase:liquibase-core:$liquibaseVersion"
     runtimeOnly "mysql:mysql-connector-java"
 
-    testImplementation "io.gihub.serpro69:kotlin-faker:$kotlinFakerVersion"
-    testImplementation "com.h2database:h2:$h2DatabaseVersion"
+    testImplementation "io.github.serpro69:kotlin-faker:$fakerVersion"
+    testImplementation "com.h2database:h2"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
-    testImplementation "io.kotest:kotest-runner-junit5:$kotlinVersion"
-    testImplementation "io.kotest:kotest-assertions-core:$kotlinVersion"
-    testImplementation "io.kotest:kotest-property:$kotlinVersion"
-    testImplementation "io.kotest.extension:kotest-extension-spring:$kotlinSpringVersion"
+    testImplementation "io.kotest:kotest-runner-junit5:$kotestVersion"
+    testImplementation "io.kotest:kotest-assertions-core:$kotestVersion"
+    testImplementation "io.kotest:kotest-property:$kotestVersion"
+}
+
+sourceSets.getByName("main").java.srcDir("$buildDir/src/main/kotlin")
+sourceSets.test.java.srcDir("src/test/kotlin")
+
+idea {
+    module {
+        testSourceDirs += project.sourceSets.test.java.srcDirs
+        sourceDirs -= project.sourceSets.test.java.srcDirs
+    }
 }
 
 compileKotlin {
@@ -56,7 +70,7 @@ compileTestKotlin {
     }
 }
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
     useJUnitPlatform()
 
     testLogging {
@@ -66,6 +80,11 @@ tasks.withType(Test) {
         showExceptions true
         showStackTraces true
     }
+}
+
+noArg {
+    annotation("org.mikehenry.kotlin_playground.configuration.NoArg")
+    invokeInitializers = true
 }
 
 springBoot.buildInfo()
