@@ -1,5 +1,6 @@
 package org.mikehenry.kotlin_playground.domain.entity
 
+import org.mikehenry.kotlin_playground.configuration.NoArg
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.MappedSuperclass
 
+@NoArg
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
 abstract class BaseEntity(
