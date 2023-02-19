@@ -19,6 +19,6 @@ class EmployeeService(
         val employee = employeeMapper.mapDtoToEntity(employeeRequestDto)
         employeeRepository.save(employee)
 
-        return employee
+        return employeeMapper.mapEntityToDto()
     }
 }
