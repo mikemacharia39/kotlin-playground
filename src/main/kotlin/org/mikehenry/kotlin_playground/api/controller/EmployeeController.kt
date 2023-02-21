@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
 import org.mikehenry.kotlin_playground.api.dto.request.EmployeeRequestDto
 import org.mikehenry.kotlin_playground.api.dto.request.RequestErrors
+import org.mikehenry.kotlin_playground.api.dto.response.EmployeeResponseDto
 import org.mikehenry.kotlin_playground.domain.service.EmployeeService
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,7 +20,7 @@ import javax.validation.Valid
 
 @Validated
 @RestController
-@RequestMapping("employees")
+@RequestMapping("/employees")
 class EmployeeController(
     private val employeeService: EmployeeService
 ) {
@@ -46,7 +47,5 @@ class EmployeeController(
             response = RequestErrors::class
         )
     )
-    fun addEmployee(@RequestBody @Valid employeeRequestDto: EmployeeRequestDto) {
-        employeeService.addEmployee(employeeRequestDto)
-    }
+    fun addEmployee(@RequestBody @Valid employeeRequestDto: EmployeeRequestDto): EmployeeResponseDto = employeeService.addEmployee(employeeRequestDto)
 }
