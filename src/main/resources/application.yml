@@ -8,13 +8,13 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3308/kotlin_test
+    url: jdbc:mysql://localhost:3308/kotlin_playground
     username: root
     password:
 
   liquibase:
-    enabled: false
-    change-log: classpath:/db/changelog/changelog.xml
+    enabled: true
+    changeLog: classpath:db/changelog/changelog.xml
 
   profiles:
     active: prod
