@@ -1,25 +1,25 @@
 package org.mikehenry.kotlin_playground.api.dto.request
 
 import org.mikehenry.kotlin_playground.domain.enumeration.EmployeeType
-import javax.validation.constraints.Max
-import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
 
 data class EmployeeRequestDto(
-    @NotBlank
-    @Max(40)
+    @field:NotNull(message = "first name should not be blank")
+    @field:Size(min = 2, max = 40)
     val firstName: String,
-    @NotBlank
-    @Max(40)
+    @field:NotNull
     val lastName: String,
-    @NotBlank
-    @Max(100)
+    @field:NotNull
+    @field:Size(min = 2, max = 40)
     val emailAddress: String,
-    @NotBlank
+
     val addresses: List<AddressRequestDto>,
-    @NotBlank
+
+    @field:NotNull
     val phoneNumber: String,
-    @NotBlank
+
     val employeeType: EmployeeType = EmployeeType.FULL_TIME,
-    @NotBlank
+
     val department: DepartmentRequestDto
 )

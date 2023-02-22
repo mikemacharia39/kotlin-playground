@@ -4,7 +4,7 @@ import org.mikehenry.kotlin_playground.domain.enumeration.AddressType
 import javax.validation.constraints.NotBlank
 
 data class AddressRequestDto(
-    @NotBlank
+
     val addressType: AddressType = AddressType.HOME,
     @NotBlank
     val addressLine1: String,
