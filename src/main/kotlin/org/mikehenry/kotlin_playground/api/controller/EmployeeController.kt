@@ -47,5 +47,5 @@ class EmployeeController(
             response = RequestErrors::class
         )
     )
-    fun addEmployee(@RequestBody @Valid employeeRequestDto: EmployeeRequestDto): EmployeeResponseDto = employeeService.addEmployee(employeeRequestDto)
+    fun addEmployee(@Valid @RequestBody employeeRequestDto: EmployeeRequestDto): EmployeeResponseDto = employeeService.addEmployee(employeeRequestDto)
 }
