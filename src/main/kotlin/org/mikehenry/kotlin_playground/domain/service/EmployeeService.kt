@@ -8,12 +8,11 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional
 class EmployeeService(
-    private val employeeMapper: EmployeeMapper
+    private val employeeMapper: EmployeeMapper,
+    private val employeeRepository: EmployeeRepository
 ) {
-
-    private lateinit var employeeRepository: EmployeeRepository
-
     @Transactional(readOnly = false)
     fun addEmployee(employeeRequestDto: EmployeeRequestDto): EmployeeResponseDto {
         val employee = employeeMapper.mapDtoToEntity(employeeRequestDto)
