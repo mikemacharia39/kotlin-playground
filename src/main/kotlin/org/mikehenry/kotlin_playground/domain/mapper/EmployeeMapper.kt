@@ -30,7 +30,8 @@ class EmployeeMapper(
             emailAddress = employee.emailAddress,
             phoneNumber = employee.phoneNumber,
             employeeType = employee.employeeType,
-            department = departmentMapper mapEntityToDTO employee.department
+            department = departmentMapper mapEntityToDTO employee.department,
+            addresses = addressMapper.mapEntitiesToDTOs(employee.addresses)
         )
     }
 

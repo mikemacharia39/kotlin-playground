@@ -9,5 +9,6 @@ data class EmployeeResponseDto(
     val emailAddress: String,
     val phoneNumber: String,
     val employeeType: EmployeeType,
-    val department: DepartmentResponseDto
+    val department: DepartmentResponseDto,
+    val addresses: List<AddressResponseDto>
 )
