@@ -1,19 +1,18 @@
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mikehenry.kotlin_playground.api.dto.request.AddressRequestDto
-import org.mikehenry.kotlin_playground.api.dto.request.DepartmentRequestDto
-import org.mikehenry.kotlin_playground.api.dto.request.EmployeeRequestDto
-import org.mikehenry.kotlin_playground.domain.entity.Department
 import org.mikehenry.kotlin_playground.domain.entity.Employee
-import org.mikehenry.kotlin_playground.domain.enumeration.AddressType
-import org.mikehenry.kotlin_playground.domain.enumeration.EmployeeStatus
-import org.mikehenry.kotlin_playground.domain.enumeration.EmployeeType
+import org.mikehenry.kotlin_playground.domain.mapper.AddressMapper
+import org.mikehenry.kotlin_playground.domain.mapper.DepartmentMapper
 import org.mikehenry.kotlin_playground.domain.mapper.EmployeeMapper
 import org.mikehenry.kotlin_playground.domain.repository.EmployeeRepository
 import org.mikehenry.kotlin_playground.domain.service.EmployeeService
-import org.mockito.InjectMocks
+import org.mikehenry.kotlin_playground.mock.mockEmployee
+import org.mikehenry.kotlin_playground.mock.mockEmployeeRequest
 import org.mockito.Mock
+import org.mockito.Mockito.any
 import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
 
@@ -23,35 +22,27 @@ class EmployeeServiceTest {
     @Mock
     private lateinit var employeeRepository: EmployeeRepository
 
-    @Mock
     private lateinit var employeeMapper: EmployeeMapper
-
-    @InjectMocks
     private lateinit var employeeService: EmployeeService
+    private lateinit var addressMapper: AddressMapper
+    private lateinit var departmentMapper: DepartmentMapper
+
+    @BeforeEach
+    fun setup() {
+        addressMapper = AddressMapper()
+        departmentMapper = DepartmentMapper()
+        employeeMapper = EmployeeMapper(addressMapper, departmentMapper)
+        employeeService = EmployeeService(employeeMapper, employeeRepository)
+    }
 
     @Test
-    fun `should return all employees`() {
-        val employees = listOf(Employee("1", "Mike",
-            "Henry", "", EmployeeType.FULL_TIME, EmployeeStatus.ACTIVE,
-            Department("Science")
-        ))
-        val request =  EmployeeRequestDto(
-            firstName = "Mike",
-            lastName = "Henry",
-            emailAddress = "mh@com",
-            addresses = listOf(
-                AddressRequestDto(
-                AddressType.HOME, "Home", "", "Kenya", "Naivasha", "", "Box"
-                )
-            ),
-            phoneNumber = "07101988888",
-            department = DepartmentRequestDto("SCIENCE")
-        )
+    fun `should save and return saved employee data`() {
+        `when`(employeeRepository.save(any(Employee::class.java))).thenReturn(mockEmployee())
 
-        `when`(employeeRepository.findAll()).thenReturn(employees)
+        val response = employeeService.addEmployee(mockEmployeeRequest())
 
-        val result = employeeService.addEmployee(request)
-
-        assertThat(result.emailAddress).isEqualTo(request.emailAddress)
+        assertNotNull(response)
+        assertThat(response.department.departmentName).isNotEmpty
+        assertThat(response.addresses.size).isEqualTo(1)
     }
 }
