@@ -16,6 +16,9 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
 import java.util.Stack
 
+/**
+ * https://kotest.io/docs/framework/testing-styles.html
+ */
 class EmployeeServiceKOTest : BehaviorSpec({
 
     given("an employee service") {
