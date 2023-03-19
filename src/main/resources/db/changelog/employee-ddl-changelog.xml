@@ -30,10 +30,10 @@
             <column name="employment_status" type="VARCHAR(30)">
                 <constraints nullable="false"/>
             </column>
-            <column name="dateCreated" type="datetime(6)">
+            <column name="date_created" type="datetime(6)">
                 <constraints nullable="false"/>
             </column>
-            <column name="dateModified" type="datetime(6)"/>
+            <column name="date_modified" type="datetime(6)"/>
         </createTable>
     </changeSet>
 
@@ -59,10 +59,10 @@
             <column name="postal_box" type="VARCHAR(10)">
                 <constraints nullable="false"/>
             </column>
-            <column name="dateCreated" type="datetime(6)">
+            <column name="date_created" type="datetime(6)">
                 <constraints nullable="false"/>
             </column>
-            <column name="dateModified" type="datetime(6)"/>
+            <column name="date_modified" type="datetime(6)"/>
         </createTable>
     </changeSet>
 
@@ -102,10 +102,10 @@
             <column name="department_description" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="dateCreated" type="datetime(6)">
+            <column name="date_created" type="datetime(6)">
                 <constraints nullable="false"/>
             </column>
-            <column name="dateModified" type="datetime(6)"/>
+            <column name="date_modified" type="datetime(6)"/>
         </createTable>
     </changeSet>
 
