@@ -18,7 +18,7 @@ import java.util.Stack
 
 class EmployeeServiceKOTest : BehaviorSpec({
 
-    given("a service") {
+    given("an employee service") {
         val employeeRepository = mock(EmployeeRepository::class.java)
         val addressMapper = AddressMapper()
         val departmentMapper = DepartmentMapper()
