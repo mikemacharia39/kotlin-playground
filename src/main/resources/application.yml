@@ -5,6 +5,8 @@ server:
 spring:
   application:
     name: Kotlin Playground
+  profiles:
+    active: prod
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -16,5 +18,20 @@ spring:
     enabled: true
     changeLog: classpath:db/changelog/changelog.xml
 
-  profiles:
-    active: prod
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true

@@ -43,7 +43,7 @@ fun mockEmployeeRequest(): EmployeeRequestDto =
     EmployeeRequestDto(
         firstName = faker.name.firstName(),
         lastName = "Henry",
-        emailAddress = "mh@com",
+        emailAddress = faker.internet.email(),
         addresses = listOf(
             AddressRequestDto(
                 AddressType.HOME,
