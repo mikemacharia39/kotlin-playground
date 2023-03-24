@@ -19,6 +19,8 @@ spring:
     changeLog: classpath:db/changelog/changelog.xml
 
 management:
+  security:
+    enabled: false
   endpoints:
     enabled-by-default: false
     web:
