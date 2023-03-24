@@ -99,9 +99,7 @@
             <column name="department_name" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="department_description" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
+            <column name="department_description" type="VARCHAR(255)"/>
             <column name="date_created" type="datetime(6)">
                 <constraints nullable="false"/>
             </column>
