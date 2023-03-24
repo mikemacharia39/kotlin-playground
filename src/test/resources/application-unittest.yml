@@ -1,6 +1,8 @@
 spring:
-  server:
-    shutdown: graceful
+  profiles: unittest
+  main:
+#    lazy-initialization: true
+    web-application-type: none
 
   application:
     name: Kotlin Playground
@@ -19,6 +21,3 @@ spring:
   liquibase:
     enabled: true
     changeLog: classpath:db/changelog/changelog.xml
-
-  profiles:
-    active: unittest
