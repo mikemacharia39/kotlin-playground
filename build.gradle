@@ -49,6 +49,10 @@ dependencies {
     testImplementation "io.mockk:mockk:$mockkVersion"
 }
 
+test {
+    useJUnitPlatform()
+}
+
 sourceSets.getByName("main").java.srcDir("$buildDir/src/main/kotlin")
 sourceSets.test.java.srcDir("src/test/kotlin")
 
