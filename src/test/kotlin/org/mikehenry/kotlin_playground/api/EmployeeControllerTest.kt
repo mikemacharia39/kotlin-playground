@@ -7,6 +7,7 @@ package org.mikehenry.kotlin_playground.api
 import KotlinPlaygroundApplication
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mikehenry.kotlin_playground.mock.mockEmployeeRequest
 import org.springframework.beans.factory.annotation.Autowired
@@ -31,6 +32,7 @@ class EmployeeControllerTest {
     private lateinit var objectMapper: ObjectMapper
 
     @Test
+    @DisplayName("Should invoke /employee endpoint and return employee with http status 200")
     fun `should save employee`() {
         mockMvc.perform(
             MockMvcRequestBuilders
