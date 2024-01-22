@@ -6,12 +6,15 @@ import io.swagger.annotations.ApiResponses
 import org.mikehenry.kotlin_playground.api.dto.request.EmployeeRequestDto
 import org.mikehenry.kotlin_playground.api.dto.request.RequestErrors
 import org.mikehenry.kotlin_playground.api.dto.response.EmployeeResponseDto
+import org.mikehenry.kotlin_playground.domain.service.EmployeeBulkUploadService
 import org.mikehenry.kotlin_playground.domain.service.EmployeeService
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.multipart.MultipartFile
 import javax.servlet.http.HttpServletResponse.SC_ACCEPTED
 import javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST
 import javax.servlet.http.HttpServletResponse.SC_FORBIDDEN
@@ -22,7 +25,8 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/employees")
 class EmployeeController(
-    private val employeeService: EmployeeService
+    private val employeeService: EmployeeService,
+    private val employeeBulkUploadService: EmployeeBulkUploadService
 ) {
 
     @PostMapping(consumes = ["application/json"],
@@ -48,4 +52,10 @@ class EmployeeController(
         )
     )
     fun addEmployee(@Valid @RequestBody employeeRequestDto: EmployeeRequestDto): EmployeeResponseDto = employeeService.addEmployee(employeeRequestDto)
+
+
+    @PostMapping("/bulk", consumes = ["multipart/form-data"])
+    fun bulkUploadEmployees(@RequestPart(value = "file", required = true) file: MultipartFile) {
+        employeeBulkUploadService.uploadEmployees(file)
+    }
 }
