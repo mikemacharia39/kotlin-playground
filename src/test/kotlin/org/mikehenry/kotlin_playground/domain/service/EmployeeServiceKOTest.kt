@@ -21,13 +21,21 @@ import java.util.Stack
  */
 class EmployeeServiceKOTest : BehaviorSpec({
 
-    given("an employee service") {
-        val employeeRepository = mock(EmployeeRepository::class.java)
-        val addressMapper = AddressMapper()
-        val departmentMapper = DepartmentMapper()
-        val employeeMapper = EmployeeMapper(addressMapper, departmentMapper)
-        val employeeService = EmployeeService(employeeMapper, employeeRepository)
+    lateinit var employeeRepository: EmployeeRepository
+    lateinit var addressMapper: AddressMapper
+    lateinit var departmentMapper: DepartmentMapper
+    lateinit var employeeMapper: EmployeeMapper
+    lateinit var employeeService: EmployeeService
 
+    beforeAny {
+        employeeRepository = mock(EmployeeRepository::class.java)
+        addressMapper = AddressMapper()
+        departmentMapper = DepartmentMapper()
+        employeeMapper = EmployeeMapper(addressMapper, departmentMapper)
+        employeeService = EmployeeService(employeeMapper, employeeRepository)
+    }
+
+    given("an employee service") {
         `when`("an employee is added") {
             `when`(employeeRepository.save(any(Employee::class.java))).thenReturn(mockEmployee())
             val response = employeeService.addEmployee(mockEmployeeRequest())
