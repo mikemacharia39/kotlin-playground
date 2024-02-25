@@ -133,4 +133,14 @@
                                  referencedColumnNames="id" referencedTableName="department"/>
 
     </changeSet>
+    <changeSet author="Mikehenry" id="202402251730">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="employee" columnName="date_of_birth"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="employee">
+            <column name="date_of_birth" type="date"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
