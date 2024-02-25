@@ -1,25 +1,45 @@
 package org.mikehenry.kotlin_playground.domain.exception
 
-import org.springframework.core.annotation.Order
-import org.springframework.http.ProblemDetail
+import mu.KotlinLogging
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
-import org.springframework.web.bind.annotation.ExceptionHandler
-import java.net.URI
-import java.net.URISyntaxException
+import org.springframework.web.context.request.NativeWebRequest
+import org.zalando.problem.Problem
+import org.zalando.problem.spring.web.advice.ProblemHandling
 
-
-@Order(-1)
 @ControllerAdvice
-class ExceptionControllerAdvise {
+class ExceptionControllerAdvise : ProblemHandling {
 
-    @ExceptionHandler(HttpMessageNotReadableException::class)
-    @Throws(URISyntaxException::class)
-    fun handleHttpMessageNotReadable(exception: HttpMessageNotReadableException?): ProblemDetail {
-        val problemDetail = ProblemDetail.forStatus(400)
-        problemDetail.type = URI.create("https://mikehenry-maina.com/problems/kotlin-playgroung/invalid-data")
-        problemDetail.title = "error.request.invalid-data"
-        problemDetail.detail = exception?.message
-        return problemDetail
+    val log = KotlinLogging.logger { }
+
+    override fun log(throwable: Throwable, problem: Problem, request: NativeWebRequest, status: HttpStatus) {
+        if (problem is BaseProblem) {
+            log.error { "Status: $status. Exception: ${problem.title} - ${problem.parameters}" }
+        } else {
+            log.error(throwable) { "Status: $status Handled exception: ${problem.title} - ${problem.detail} - ${problem.parameters}" }
+        }
+    }
+
+    override fun handleMethodArgumentNotValid(
+        exception: MethodArgumentNotValidException,
+        request: NativeWebRequest
+    ): ResponseEntity<Problem> {
+        val fieldErrors = exception.bindingResult.fieldErrors
+            .filter { it.code != null }
+            .associateBy(
+                { it.field },
+                { it.code as Any }
+            )
+        return create(exception, InvalidInputProblem("error.invalid-input", fieldErrors), request)
+    }
+
+    override fun handleMessageNotReadableException(
+        exception: HttpMessageNotReadableException,
+        request: NativeWebRequest
+    ): ResponseEntity<Problem> {
+        return create(exception, InvalidInputProblem("error.request.invalid-input", mapOf("message" to (exception.message ?: ""))), request)
     }
 }

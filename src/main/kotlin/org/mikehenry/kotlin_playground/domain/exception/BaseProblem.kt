@@ -9,18 +9,10 @@ import java.util.Locale
 import java.util.ResourceBundle
 
 abstract class BaseProblem(
-    uri: URI,
-    title: String? = null,
     status: Status,
     errorKey: String,
     details: Map<String, Any> = emptyMap()
-): AbstractThrowableProblem(uri, title, status, errorKey, null, null, details) {
-    constructor(
-        uri: URI,
-        status: Status,
-        errorKey: String,
-        details: Map<String, Any> = emptyMap()
-    ): this(uri, null, status, errorKey, details)
+): AbstractThrowableProblem(null, null, status, errorKey, null, null, details) {
 
     private val log = KotlinLogging.logger { }
 
