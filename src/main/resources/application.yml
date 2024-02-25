@@ -7,6 +7,8 @@ spring:
     name: Kotlin Playground
   profiles:
     active: prod
+  banner:
+    location: classpath:banner.txt
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
