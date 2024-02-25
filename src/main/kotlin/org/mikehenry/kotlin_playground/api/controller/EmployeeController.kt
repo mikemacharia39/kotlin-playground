@@ -60,6 +60,6 @@ class EmployeeController(
         employeeBulkUploadService.uploadEmployees(file)
     }
 
-    @GetMapping("/{employeeId}")
-    fun getEmployee(employeeId: Long): EmployeeResponseDto = employeeService.getEmployee(employeeId)
+//    @GetMapping("/{employeeId}")
+//    fun getEmployee(employeeId: Long): EmployeeResponseDto = employeeService.getEmployee(employeeId)
 }

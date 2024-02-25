@@ -10,10 +10,11 @@ import org.mikehenry.kotlin_playground.domain.entity.Employee
 import org.mikehenry.kotlin_playground.domain.enumeration.AddressType
 import org.mikehenry.kotlin_playground.domain.enumeration.EmployeeStatus
 import org.mikehenry.kotlin_playground.domain.enumeration.EmployeeType
+import java.time.LocalDate
 
 val faker = Faker()
 
-fun mockEmployee(employeeId: Long = faker.random.nextLong()): Employee =
+fun mockEmployee(): Employee =
     Employee(
         firstName = faker.name.firstName(),
         lastName = faker.name.lastName(),
@@ -43,6 +44,7 @@ fun mockEmployeeRequest(): EmployeeRequestDto =
     EmployeeRequestDto(
         firstName = faker.name.firstName(),
         lastName = "Henry",
+        dateOfBirth = LocalDate.of(1990, 10, 24),
         emailAddress = faker.internet.email(),
         addresses = listOf(
             AddressRequestDto(

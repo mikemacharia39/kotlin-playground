@@ -82,21 +82,22 @@ class EmployeeBulkUploadService {
         return EmployeeRequestDto(
             firstName = row.getCell(0).stringCellValue,
             lastName = row.getCell(1).stringCellValue,
-            emailAddress = row.getCell(2).stringCellValue,
-            phoneNumber = row.getCell(3).stringCellValue,
-            employeeType = EmployeeType.valueOf(row.getCell(4).stringCellValue),
+            dateOfBirth = row.getCell(2).localDateTimeCellValue.toLocalDate(),
+            emailAddress = row.getCell(3).stringCellValue,
+            phoneNumber = row.getCell(4).stringCellValue,
+            employeeType = EmployeeType.valueOf(row.getCell(5).stringCellValue),
             department = DepartmentRequestDto(
-                departmentName = row.getCell(5).stringCellValue,
-                departmentDescription = "Department of ${row.getCell(5).stringCellValue}"
+                departmentName = row.getCell(6).stringCellValue,
+                departmentDescription = "Department of ${row.getCell(6).stringCellValue}"
             ),
             addresses = listOf(
                 AddressRequestDto(
                     addressType = AddressType.HOME,
-                    country = row.getCell(6).stringCellValue,
-                    city = row.getCell(7).stringCellValue,
-                    addressLine1 = row.getCell(8).stringCellValue,
-                    state = row.getCell(9).stringCellValue,
-                    postalBox = row.getCell(10).stringCellValue
+                    country = row.getCell(7).stringCellValue,
+                    city = row.getCell(8).stringCellValue,
+                    addressLine1 = row.getCell(9).stringCellValue,
+                    state = row.getCell(10).stringCellValue,
+                    postalBox = row.getCell(11).stringCellValue
                 )
             )
         )
@@ -130,6 +131,7 @@ class EmployeeBulkUploadService {
         if (headerRowCellValues != listOf(
                 "First Name",
                 "Last Name",
+                "Date of Birth",
                 "Email Address",
                 "Phone Number",
                 "Employee Type",

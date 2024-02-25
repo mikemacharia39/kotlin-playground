@@ -4,8 +4,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mikehenry.kotlin_playground.domain.entity.Employee
-import org.mikehenry.kotlin_playground.domain.mapper.AddressMapper
-import org.mikehenry.kotlin_playground.domain.mapper.DepartmentMapper
 import org.mikehenry.kotlin_playground.domain.mapper.EmployeeMapper
 import org.mikehenry.kotlin_playground.domain.repository.EmployeeRepository
 import org.mikehenry.kotlin_playground.domain.service.EmployeeService
@@ -24,14 +22,9 @@ class EmployeeServiceTest {
 
     private lateinit var employeeMapper: EmployeeMapper
     private lateinit var employeeService: EmployeeService
-    private lateinit var addressMapper: AddressMapper
-    private lateinit var departmentMapper: DepartmentMapper
 
     @BeforeEach
     fun setup() {
-        addressMapper = AddressMapper()
-        departmentMapper = DepartmentMapper()
-        employeeMapper = EmployeeMapper(addressMapper, departmentMapper)
         employeeService = EmployeeService(employeeMapper, employeeRepository)
     }
 

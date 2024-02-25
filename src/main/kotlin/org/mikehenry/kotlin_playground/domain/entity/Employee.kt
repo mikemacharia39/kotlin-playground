@@ -1,5 +1,6 @@
 package org.mikehenry.kotlin_playground.domain.entity
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -13,6 +14,7 @@ import jakarta.persistence.CascadeType.PERSIST
 import jakarta.persistence.Table
 import org.mikehenry.kotlin_playground.domain.enumeration.EmployeeStatus
 import org.mikehenry.kotlin_playground.domain.enumeration.EmployeeType
+import java.time.LocalDate
 
 @Entity
 @Table(name = "employee")
@@ -22,6 +24,10 @@ class Employee(
 
     @Column(nullable = false)
     val lastName: String,
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "date_of_birth")
+    val dateOfBirth: LocalDate? = null,
 
     @Column(nullable = false)
     val emailAddress: String,
