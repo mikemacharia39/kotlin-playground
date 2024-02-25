@@ -1,11 +1,11 @@
 package org.mikehenry.kotlin_playground.domain.entity
 
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
+import jakarta.persistence.Table
 import org.mikehenry.kotlin_playground.domain.enumeration.AddressType
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.EnumType
-import javax.persistence.Enumerated
-import javax.persistence.Table
 
 @Entity
 @Table(name = "address")

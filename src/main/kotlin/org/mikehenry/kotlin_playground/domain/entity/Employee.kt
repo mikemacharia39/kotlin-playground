@@ -1,18 +1,18 @@
 package org.mikehenry.kotlin_playground.domain.entity
 
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.JoinTable
+import jakarta.persistence.OneToMany
+import jakarta.persistence.OneToOne
+import jakarta.persistence.CascadeType.MERGE
+import jakarta.persistence.CascadeType.PERSIST
+import jakarta.persistence.Table
 import org.mikehenry.kotlin_playground.domain.enumeration.EmployeeStatus
 import org.mikehenry.kotlin_playground.domain.enumeration.EmployeeType
-import javax.persistence.CascadeType.MERGE
-import javax.persistence.CascadeType.PERSIST
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.EnumType
-import javax.persistence.Enumerated
-import javax.persistence.JoinColumn
-import javax.persistence.JoinTable
-import javax.persistence.OneToMany
-import javax.persistence.OneToOne
-import javax.persistence.Table
 
 @Entity
 @Table(name = "employee")

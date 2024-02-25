@@ -20,4 +20,8 @@ class EmployeeService(
 
         return employeeMapper.mapEntityToDto(response)
     }
+
+    fun getEmployee(employeeId: Long) {
+        employeeRepository.findById(employeeId)
+    }
 }
