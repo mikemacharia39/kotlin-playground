@@ -1,5 +1,6 @@
 package org.mikehenry.kotlin_playground.domain.entity
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import java.time.LocalDateTime
 import jakarta.persistence.Column
 import jakarta.persistence.EntityListeners
@@ -22,6 +23,7 @@ abstract class BaseEntity(
     @Column(updatable = false, nullable = false)
     val id: Long = 0,
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Column(name = "date_created", updatable = false)
     @CreatedDate
     var dateCreated: LocalDateTime = LocalDateTime.now(),

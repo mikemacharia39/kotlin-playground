@@ -1,11 +1,11 @@
 package org.mikehenry.kotlin_playground.api.dto.request
 
+import jakarta.validation.constraints.NotBlank
 import lombok.AllArgsConstructor
 import lombok.Builder
 import lombok.Getter
 import lombok.Setter
 import org.mikehenry.kotlin_playground.domain.enumeration.AddressType
-import javax.validation.constraints.NotBlank
 
 @Getter
 @Setter

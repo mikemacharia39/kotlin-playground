@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse.SC_ACCEPTED
 import jakarta.servlet.http.HttpServletResponse.SC_BAD_REQUEST
 import jakarta.servlet.http.HttpServletResponse.SC_FORBIDDEN
 import jakarta.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR
-import javax.validation.Valid
+import jakarta.validation.Valid
 import org.mikehenry.kotlin_playground.api.dto.request.EmployeeRequestDto
 import org.mikehenry.kotlin_playground.api.dto.request.RequestErrors
 import org.mikehenry.kotlin_playground.api.dto.response.EmployeeResponseDto
@@ -15,6 +15,7 @@ import org.mikehenry.kotlin_playground.domain.service.EmployeeBulkUploadService
 import org.mikehenry.kotlin_playground.domain.service.EmployeeService
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -60,6 +61,6 @@ class EmployeeController(
         employeeBulkUploadService.uploadEmployees(file)
     }
 
-//    @GetMapping("/{employeeId}")
-//    fun getEmployee(employeeId: Long): EmployeeResponseDto = employeeService.getEmployee(employeeId)
+    @GetMapping("/{employeeId}")
+    fun getEmployee(@PathVariable employeeId: Long): EmployeeResponseDto = employeeService.getEmployee(employeeId)
 }
