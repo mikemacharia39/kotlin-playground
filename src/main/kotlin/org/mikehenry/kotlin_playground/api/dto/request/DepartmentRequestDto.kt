@@ -1,9 +1,17 @@
 package org.mikehenry.kotlin_playground.api.dto.request
 
+import lombok.AllArgsConstructor
+import lombok.Builder
+import lombok.Getter
+import lombok.Setter
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size
 
-data class DepartmentRequestDto(
+@Getter
+@Setter
+@AllArgsConstructor
+@Builder
+class DepartmentRequestDto(
     @NotBlank
     @field:Size(min = 2, max = 40)
     val departmentName: String,

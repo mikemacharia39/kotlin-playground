@@ -1,9 +1,17 @@
 package org.mikehenry.kotlin_playground.api.dto.request
 
+import lombok.AllArgsConstructor
+import lombok.Builder
+import lombok.Getter
+import lombok.Setter
 import org.mikehenry.kotlin_playground.domain.enumeration.AddressType
 import javax.validation.constraints.NotBlank
 
-data class AddressRequestDto(
+@Getter
+@Setter
+@AllArgsConstructor
+@Builder
+class AddressRequestDto(
 
     val addressType: AddressType = AddressType.HOME,
     @NotBlank
