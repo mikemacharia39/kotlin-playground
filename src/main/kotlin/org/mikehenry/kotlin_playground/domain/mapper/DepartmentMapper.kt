@@ -1,29 +1,21 @@
 package org.mikehenry.kotlin_playground.domain.mapper
 
+import org.mapstruct.Mapper
+import org.mapstruct.Mapping
+import org.mapstruct.Named
 import org.mikehenry.kotlin_playground.api.dto.request.DepartmentRequestDto
 import org.mikehenry.kotlin_playground.api.dto.response.DepartmentResponseDto
 import org.mikehenry.kotlin_playground.domain.entity.Department
-import org.springframework.stereotype.Component
 
-@Component
-class DepartmentMapper {
+@Mapper(componentModel = "spring")
+interface DepartmentMapper {
 
-    fun mapDTOsToEntities(departmentRequestDtos: List<DepartmentRequestDto>): List<Department> {
-        return departmentRequestDtos.map { this mapDTOToEntity it }
-    }
+    @Mapping(target = "dateCreated", ignore = true)
+    @Mapping(target = "dateModified", ignore = true)
+    @Named("toDepartmentEntity")
+    fun mapDTOToEntity(departmentRequestDto: DepartmentRequestDto): Department
 
-    infix fun mapDTOToEntity(departmentRequestDto: DepartmentRequestDto): Department {
-        return Department(
-            departmentName = departmentRequestDto.departmentName,
-            departmentDescription = departmentRequestDto.departmentDescription
-        )
-    }
-
-    infix fun mapEntityToDTO(department: Department): DepartmentResponseDto {
-        return DepartmentResponseDto(
-            departmentId = department.id,
-            departmentName = department.departmentName,
-            departmentDescription = department.departmentDescription
-        )
-    }
+    @Mapping(target = "departmentId", source = "id")
+    @Named("toDepartmentDTO")
+    fun mapEntityToDTO(department: Department): DepartmentResponseDto
 }
