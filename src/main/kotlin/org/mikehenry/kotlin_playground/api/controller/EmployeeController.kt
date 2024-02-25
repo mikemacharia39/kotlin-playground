@@ -3,23 +3,24 @@ package org.mikehenry.kotlin_playground.api.controller
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
+import jakarta.servlet.http.HttpServletResponse.SC_ACCEPTED
+import jakarta.servlet.http.HttpServletResponse.SC_BAD_REQUEST
+import jakarta.servlet.http.HttpServletResponse.SC_FORBIDDEN
+import jakarta.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR
+import javax.validation.Valid
 import org.mikehenry.kotlin_playground.api.dto.request.EmployeeRequestDto
 import org.mikehenry.kotlin_playground.api.dto.request.RequestErrors
 import org.mikehenry.kotlin_playground.api.dto.response.EmployeeResponseDto
 import org.mikehenry.kotlin_playground.domain.service.EmployeeBulkUploadService
 import org.mikehenry.kotlin_playground.domain.service.EmployeeService
 import org.springframework.validation.annotation.Validated
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
-import javax.servlet.http.HttpServletResponse.SC_ACCEPTED
-import javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST
-import javax.servlet.http.HttpServletResponse.SC_FORBIDDEN
-import javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR
-import javax.validation.Valid
 
 @Validated
 @RestController
@@ -58,4 +59,7 @@ class EmployeeController(
     fun bulkUploadEmployees(@RequestPart(value = "file", required = true) file: MultipartFile) {
         employeeBulkUploadService.uploadEmployees(file)
     }
+
+    @GetMapping("/{employeeId}")
+    fun getEmployee(employeeId: Long): EmployeeResponseDto = employeeService.getEmployee(employeeId)
 }
