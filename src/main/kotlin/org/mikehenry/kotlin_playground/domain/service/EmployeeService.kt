@@ -2,6 +2,7 @@ package org.mikehenry.kotlin_playground.domain.service
 
 import org.mikehenry.kotlin_playground.api.dto.request.EmployeeRequestDto
 import org.mikehenry.kotlin_playground.api.dto.response.EmployeeResponseDto
+import org.mikehenry.kotlin_playground.domain.exception.NotFoundProblem
 import org.mikehenry.kotlin_playground.domain.mapper.EmployeeMapper
 import org.mikehenry.kotlin_playground.domain.repository.EmployeeRepository
 import org.springframework.stereotype.Service
@@ -21,7 +22,10 @@ class EmployeeService(
         return employeeMapper.mapEntityToDTO(response)
     }
 
-    fun getEmployee(employeeId: Long) {
-        employeeRepository.findById(employeeId)
+    fun getEmployee(employeeId: Long): EmployeeResponseDto {
+        val employee = employeeRepository.findById(employeeId)
+            .orElseThrow { throw NotFoundProblem("error.employee.not.found", mapOf("employeeId" to employeeId)) }
+
+        return employeeMapper.mapEntityToDTO(employee)
     }
 }
