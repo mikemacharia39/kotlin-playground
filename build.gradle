@@ -13,6 +13,7 @@ plugins {
     id "org.jetbrains.kotlin.plugin.allopen" version "$kotlinVersion"
     //Creates no empty constructors by default
     id "org.jetbrains.kotlin.plugin.noarg" version "$kotlinVersion"
+    id "org.jetbrains.kotlin.kapt" version "$kotlinVersion"
 }
 
 group = "org.mikehenry"
@@ -29,12 +30,17 @@ allprojects {
 }
 
 dependencies {
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    kapt "org.mapstruct:mapstruct-processor:$mapstructVersion"
+
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation "org.springframework.boot:spring-boot-starter-validation"
     implementation "org.springframework.boot:spring-boot-starter-web"
 
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
+    implementation "org.zalando:jackson-datatype-problem:$zalandoJacksonProblemVersion"
+
     implementation "io.swagger:swagger-annotations:1.5.23"
     implementation "org.zalando:problem-spring-web:$zalandoProblemVersion"
     implementation "io.github.microutils:kotlin-logging-jvm:3.0.5"
@@ -44,6 +50,8 @@ dependencies {
     implementation "org.mapstruct:mapstruct:$mapstructVersion"
 
     implementation "com.github.blagerweij:liquibase-sessionlock:$liquibaseSessionLockVersion"
+
+    implementation "org.projectlombok:lombok"
 
     runtimeOnly "org.apache.tomcat.embed:tomcat-embed-core"
     runtimeOnly "org.liquibase:liquibase-core:$liquibaseVersion"
@@ -102,4 +110,13 @@ noArg {
     invokeInitializers = true
 }
 
+kapt {
+    arguments {
+        // https://stackoverflow.com/questions/74035692/mapstruct-not-injected-in-kotlin-project
+        // https://medium.com/@muhammadusama_43306/how-to-use-mapstruct-with-spring-boot-kotlin-painlessly-55184765ace4
+        arg("mapstruct.defaultComponentModel", "spring")
+        arg("mapstruct.unmappedTargetPolicy", "ERROR")
+        arg("mapstruct.defaultInjectionStrategy", "CONSTRUCTOR")
+    }
+}
 springBoot.buildInfo()
