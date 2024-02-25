@@ -22,6 +22,7 @@ abstract class EmployeeMapper{
     @Mapping(target = "employeeId", source = "id")
     @Mapping(target = "addresses", source = "addresses", qualifiedByName = ["toAddressDTOs"])
     @Mapping(target = "department", source = "department", qualifiedByName = ["toDepartmentDTO"])
+    @Mapping(target = "dateCreated", source = "dateCreated", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     abstract infix fun mapEntityToDTO(employee: Employee): EmployeeResponseDto
 
     fun mapDTOsToEntities(employeeRequestDtos: List<EmployeeRequestDto>): List<Employee> {
