@@ -33,12 +33,17 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation "org.springframework.boot:spring-boot-starter-validation"
     implementation "org.springframework.boot:spring-boot-starter-web"
+
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
     implementation "io.swagger:swagger-annotations:1.5.23"
     implementation "org.zalando:problem-spring-web:$zalandoProblemVersion"
     implementation "io.github.microutils:kotlin-logging-jvm:3.0.5"
-    implementation "org.apache.poi:poi-ooxml:5.2.0"
+    implementation "org.apache.poi:poi-ooxml:$apachePoiVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion"
+
+    implementation "org.mapstruct:mapstruct:$mapstructVersion"
+
+    implementation "com.github.blagerweij:liquibase-sessionlock:$liquibaseSessionLockVersion"
 
     runtimeOnly "org.apache.tomcat.embed:tomcat-embed-core"
     runtimeOnly "org.liquibase:liquibase-core:$liquibaseVersion"
