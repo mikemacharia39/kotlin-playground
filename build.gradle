@@ -61,6 +61,7 @@ dependencies {
     // Using Gradle 5.0 or higher, you can use the BOM to manage the versions of the Testcontainers modules
     implementation platform("org.testcontainers:testcontainers-bom:$testContainersVersion")
     implementation "org.testcontainers:localstack"
+    implementation "org.testcontainers:junit-jupiter:$testContainersJunitJupiterVersion"
 
     runtimeOnly "org.apache.tomcat.embed:tomcat-embed-core"
     runtimeOnly "org.liquibase:liquibase-core:$liquibaseVersion"
