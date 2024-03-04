@@ -39,3 +39,9 @@ springdoc:
     enabled: true
   swagger-ui:
     enabled: true
+
+application:
+  aws:
+    s3:
+      employee-document:
+        bucket: employee-documents
