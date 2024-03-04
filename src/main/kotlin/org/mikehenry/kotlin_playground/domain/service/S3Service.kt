@@ -8,15 +8,21 @@ import software.amazon.awssdk.core.exception.SdkException
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.S3Client
 import software.amazon.awssdk.services.s3.model.CreateBucketRequest
+import software.amazon.awssdk.services.s3.model.GetObjectRequest
 import software.amazon.awssdk.services.s3.model.HeadBucketRequest
 import software.amazon.awssdk.services.s3.model.PutObjectRequest
 import software.amazon.awssdk.services.s3.model.S3Exception
+import software.amazon.awssdk.services.s3.presigner.S3Presigner
+import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest
 import java.io.IOException
 import java.io.InputStream
+import java.net.URL
+import java.time.Duration
 
 @Service
 class S3Service(
-    private val s3Client: S3Client
+    private val s3Client: S3Client,
+    private val s3Presigner: S3Presigner
 ) {
 
     private val log = KotlinLogging.logger {}
@@ -43,6 +49,18 @@ class S3Service(
                 }
             }
         }
+    }
+
+    fun getDownloadUrl(fileIdentifier: String, bucketName: String): URL {
+        val objectRequest = GetObjectRequest.builder()
+            .bucket(bucketName)
+            .key(fileIdentifier)
+            .build()
+        val presignedGetObjectRequest = GetObjectPresignRequest.builder()
+            .signatureDuration(Duration.ofMinutes(10))
+            .getObjectRequest(objectRequest)
+            .build()
+        return s3Presigner.presignGetObject(presignedGetObjectRequest).url()
     }
 
     private fun checkIfBucketExistIfNotCreate(bucketName: String) {
