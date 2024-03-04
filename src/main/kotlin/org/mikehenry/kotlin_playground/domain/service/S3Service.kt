@@ -2,6 +2,7 @@ package org.mikehenry.kotlin_playground.domain.service
 
 import mu.KotlinLogging
 import org.mikehenry.kotlin_playground.domain.exception.UploadFailedProblem
+import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import software.amazon.awssdk.core.exception.SdkException
 import software.amazon.awssdk.core.sync.RequestBody
@@ -13,6 +14,7 @@ import software.amazon.awssdk.services.s3.model.S3Exception
 import java.io.IOException
 import java.io.InputStream
 
+@Service
 class S3Service(
     private val s3Client: S3Client
 ) {
