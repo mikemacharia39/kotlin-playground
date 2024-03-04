@@ -20,6 +20,7 @@ class S3Configuration {
             .build()
     }
 
+    @Profile("!prod")
     @Bean
     fun s3Presigner(): S3Presigner {
         return S3Presigner.builder()
