@@ -6,16 +6,24 @@ import org.mikehenry.kotlin_playground.domain.exception.NotFoundProblem
 import org.mikehenry.kotlin_playground.domain.mapper.EmployeeMapper
 import org.mikehenry.kotlin_playground.domain.repository.EmployeeRepository
 import org.mikehenry.kotlin_playground.domain.specification.searchEmployee
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.multipart.MultipartFile
+
+const val EMPLOYEE_FILE_PREFIX = "employee_"
 
 @Service
 @Transactional
 class EmployeeService(
     private val employeeMapper: EmployeeMapper,
-    private val employeeRepository: EmployeeRepository
+    private val employeeRepository: EmployeeRepository,
+    private val s3Service: S3Service,
+
+    @Value("\${application.aws.s3.employee-document.bucket}")
+    private val employeeDocumentBucket: String
 ) {
     @Transactional(readOnly = false)
     fun addEmployee(employeeRequestDto: EmployeeRequestDto): EmployeeResponseDto {
@@ -48,5 +56,9 @@ class EmployeeService(
         return employeeRepository.findAll(
             searchEmployee(employeeName, employeeIds, phoneNumber, departmentName, address), pageable
         ).map { employeeMapper.mapEntityToDTO(it) }
+    }
+
+    fun saveEmployeeIDDocument(employeeId: Long, file: MultipartFile) {
+        s3Service.uploadFile("$EMPLOYEE_FILE_PREFIX$employeeId", file, employeeDocumentBucket)
     }
 }

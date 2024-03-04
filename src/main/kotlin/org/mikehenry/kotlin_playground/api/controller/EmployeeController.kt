@@ -15,6 +15,7 @@ import org.mikehenry.kotlin_playground.domain.service.EmployeeBulkUploadService
 import org.mikehenry.kotlin_playground.domain.service.EmployeeService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.http.HttpStatus
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RequestPart
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
 
@@ -61,14 +63,19 @@ class EmployeeController(
     fun addEmployee(@Valid @RequestBody employeeRequestDto: EmployeeRequestDto): EmployeeResponseDto =
         employeeService.addEmployee(employeeRequestDto)
 
-
     @PostMapping("/bulk", consumes = ["multipart/form-data"])
     fun bulkUploadEmployees(@RequestPart(value = "file", required = true) file: MultipartFile) {
         employeeBulkUploadService.uploadEmployees(file)
     }
 
+    @PostMapping("/id-document/{employeeId}", consumes = ["multipart/form-data"])
+    @ResponseStatus(HttpStatus.CREATED)
+    fun saveEmployeeIDDocument(@PathVariable(name = "employeeId") employeeId: Long, @RequestPart("file") file: MultipartFile) {
+        employeeService.saveEmployeeIDDocument(employeeId, file)
+    }
+
     @GetMapping("/{employeeId}")
-    fun getEmployee(@PathVariable employeeId: Long): EmployeeResponseDto = employeeService.getEmployee(employeeId)
+    fun getEmployee(@PathVariable(name = "employeeId") employeeId: Long): EmployeeResponseDto = employeeService.getEmployee(employeeId)
 
     @GetMapping("/all")
     fun getAllEmployees(pageable: Pageable): Page<EmployeeResponseDto> = employeeService.getAllEmployees(pageable)
