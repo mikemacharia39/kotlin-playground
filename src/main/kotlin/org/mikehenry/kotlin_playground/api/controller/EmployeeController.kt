@@ -11,6 +11,7 @@ import jakarta.validation.Valid
 import org.mikehenry.kotlin_playground.api.dto.request.EmployeeRequestDto
 import org.mikehenry.kotlin_playground.api.dto.request.RequestErrors
 import org.mikehenry.kotlin_playground.api.dto.response.EmployeeResponseDto
+import org.mikehenry.kotlin_playground.api.dto.response.FileDownloadResponseDto
 import org.mikehenry.kotlin_playground.domain.service.EmployeeBulkUploadService
 import org.mikehenry.kotlin_playground.domain.service.EmployeeService
 import org.springframework.data.domain.Page
@@ -76,6 +77,9 @@ class EmployeeController(
 
     @GetMapping("/{employeeId}")
     fun getEmployee(@PathVariable(name = "employeeId") employeeId: Long): EmployeeResponseDto = employeeService.getEmployee(employeeId)
+
+    @GetMapping("/id-document/{employeeId}")
+    fun getEmployeeIDDocument(@PathVariable(name = "employeeId") employeeId: Long): FileDownloadResponseDto = employeeService.getEmployeeIDDocument(employeeId)
 
     @GetMapping("/all")
     fun getAllEmployees(pageable: Pageable): Page<EmployeeResponseDto> = employeeService.getAllEmployees(pageable)
