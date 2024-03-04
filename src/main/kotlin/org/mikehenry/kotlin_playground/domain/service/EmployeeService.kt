@@ -2,6 +2,7 @@ package org.mikehenry.kotlin_playground.domain.service
 
 import org.mikehenry.kotlin_playground.api.dto.request.EmployeeRequestDto
 import org.mikehenry.kotlin_playground.api.dto.response.EmployeeResponseDto
+import org.mikehenry.kotlin_playground.api.dto.response.FileDownloadResponseDto
 import org.mikehenry.kotlin_playground.domain.exception.NotFoundProblem
 import org.mikehenry.kotlin_playground.domain.mapper.EmployeeMapper
 import org.mikehenry.kotlin_playground.domain.repository.EmployeeRepository
@@ -60,5 +61,11 @@ class EmployeeService(
 
     fun saveEmployeeIDDocument(employeeId: Long, file: MultipartFile) {
         s3Service.uploadFile("$EMPLOYEE_FILE_PREFIX$employeeId", file, employeeDocumentBucket)
+    }
+
+    fun getEmployeeIDDocument(employeeId: Long): FileDownloadResponseDto {
+        return FileDownloadResponseDto(
+            url = s3Service.getDownloadUrl("$EMPLOYEE_FILE_PREFIX$employeeId", employeeDocumentBucket).toString()
+        )
     }
 }
