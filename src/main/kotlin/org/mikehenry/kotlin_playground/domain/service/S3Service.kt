@@ -55,6 +55,7 @@ class S3Service(
             .build()
         return try {
             s3Client.headBucket(bucketRequest)
+            log.info { "Bucket $bucketName exists" }
             true
         } catch (e: S3Exception) {
             log.error { "Bucket does not exist ${e.message}" }
@@ -73,6 +74,7 @@ class S3Service(
                 .bucket(bucketName)
                 .build()
             s3Waiter.waitUntilBucketExists(bucketRequestWaiter)
+            log.info { "Bucket $bucketName created successfully" }
         } catch (e: S3Exception) {
             log.error { "Error creating bucket: ${e.message}" }
         }

@@ -58,8 +58,9 @@ dependencies {
     implementation "software.amazon.awssdk:s3:$awsSdkVersion"
 
     // for now since we don't have access to aws s3 we shall use localstack
-    implementation "org.testcontainers:testcontainer:$testContainersVersion"
-    implementation "org.testcontainers:localstack:$testContainersVersion"
+    // Using Gradle 5.0 or higher, you can use the BOM to manage the versions of the Testcontainers modules
+    implementation platform("org.testcontainers:testcontainers-bom:$testContainersVersion")
+    implementation "org.testcontainers:localstack"
 
     runtimeOnly "org.apache.tomcat.embed:tomcat-embed-core"
     runtimeOnly "org.liquibase:liquibase-core:$liquibaseVersion"
@@ -73,10 +74,9 @@ dependencies {
     testImplementation "io.kotest:kotest-property:$kotestVersion"
     testImplementation "io.mockk:mockk:$mockkVersion"
 
-    itestImplementation "org.testcontainers:testcontainer:$testContainersVersion"
     itestImplementation "org.testcontainers:junit-jupiter:$testContainersJunitJupiterVersion"
-    itestImplementation "org.testcontainers:mysql:$testContainersMysqlVersion"
-    itestImplementation "org.testcontainers:localstack:$testContainersVersion"
+    itestImplementation "org.testcontainers:mysql"
+    itestImplementation "org.testcontainers:localstack"
 }
 
 test {
