@@ -5,4 +5,4 @@ import org.zalando.problem.Status
 class UploadFailedProblem(
     errorKey: String,
     params: Map<String, Any> = emptyMap()
-): BaseProblem(status = Status.NOT_FOUND, errorKey = errorKey, details = params)
+): BaseProblem(status = Status.INTERNAL_SERVER_ERROR, errorKey = errorKey, details = params)
