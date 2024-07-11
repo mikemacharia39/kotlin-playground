@@ -14,6 +14,8 @@ import org.mikehenry.kotlin_playground.mock.mockEmployee
 import org.mikehenry.kotlin_playground.mock.mockEmployeeRequest
 import org.mockito.Mock
 import org.mockito.Mockito.any
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
 
@@ -48,5 +50,7 @@ class EmployeeServiceTest {
         assertNotNull(response)
         assertThat(response.department.departmentName).isNotEmpty
         assertThat(response.addresses.size).isEqualTo(1)
+
+        verify(employeeRepository, times(1)).save(any(Employee::class.java))
     }
 }
