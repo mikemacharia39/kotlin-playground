@@ -5,7 +5,9 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.mikehenry.kotlin_playground.domain.entity.Employee
-import org.mikehenry.kotlin_playground.domain.mapper.EmployeeMapper
+import org.mikehenry.kotlin_playground.domain.mapper.AddressMapperImpl
+import org.mikehenry.kotlin_playground.domain.mapper.DepartmentMapperImpl
+import org.mikehenry.kotlin_playground.domain.mapper.EmployeeMapperImpl
 import org.mikehenry.kotlin_playground.domain.repository.EmployeeRepository
 import org.mikehenry.kotlin_playground.mock.mockEmployee
 import org.mikehenry.kotlin_playground.mock.mockEmployeeRequest
@@ -20,13 +22,18 @@ import java.util.Stack
 class EmployeeServiceKOTest : BehaviorSpec({
 
     lateinit var employeeRepository: EmployeeRepository
-    lateinit var employeeMapper: EmployeeMapper
+    lateinit var employeeMapper: EmployeeMapperImpl
+    lateinit var addressMapper: AddressMapperImpl
+    lateinit var departmentMapper: DepartmentMapperImpl
     lateinit var employeeService: EmployeeService
     lateinit var s3Service: S3Service
 
     val testBucket = "employee-documents"
 
     beforeAny {
+        departmentMapper = DepartmentMapperImpl()
+        addressMapper = AddressMapperImpl()
+        employeeMapper = EmployeeMapperImpl(addressMapper, departmentMapper)
         employeeRepository = mock(EmployeeRepository::class.java)
         employeeService = EmployeeService(employeeMapper, employeeRepository, s3Service, testBucket)
     }
