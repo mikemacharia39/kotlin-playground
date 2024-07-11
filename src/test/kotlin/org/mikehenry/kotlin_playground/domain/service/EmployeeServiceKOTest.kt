@@ -35,6 +35,7 @@ class EmployeeServiceKOTest : BehaviorSpec({
         addressMapper = AddressMapperImpl()
         employeeMapper = EmployeeMapperImpl(addressMapper, departmentMapper)
         employeeRepository = mock(EmployeeRepository::class.java)
+        s3Service = mock(S3Service::class.java)
         employeeService = EmployeeService(employeeMapper, employeeRepository, s3Service, testBucket)
     }
 
