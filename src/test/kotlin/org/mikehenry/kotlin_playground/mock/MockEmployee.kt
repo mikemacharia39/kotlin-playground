@@ -22,6 +22,7 @@ fun mockEmployee(): Employee =
         phoneNumber = faker.phoneNumber.phoneNumber(),
         employeeType = EmployeeType.FULL_TIME,
         employeeStatus = EmployeeStatus.ACTIVE,
+        dateOfBirth = LocalDate.of(1990, 10, 20),
         department = Department(
             departmentName = "Science",
             departmentDescription = "Science Department"

@@ -22,10 +22,13 @@ class EmployeeServiceKOTest : BehaviorSpec({
     lateinit var employeeRepository: EmployeeRepository
     lateinit var employeeMapper: EmployeeMapper
     lateinit var employeeService: EmployeeService
+    lateinit var s3Service: S3Service
+
+    val testBucket = "employee-documents"
 
     beforeAny {
         employeeRepository = mock(EmployeeRepository::class.java)
-        employeeService = EmployeeService(employeeMapper, employeeRepository)
+        employeeService = EmployeeService(employeeMapper, employeeRepository, s3Service, testBucket)
     }
 
     given("an employee service") {
