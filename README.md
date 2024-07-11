@@ -8,6 +8,7 @@
 3. It uses Java 17
 4. It uses Spring boot 3.2.1
 5. It uses JUnit 5
+6. It uses kotest
 
 ### Features
 1. It has a simple REST API to manage employees
