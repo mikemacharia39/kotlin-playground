@@ -15,6 +15,7 @@ As you move inward, you get more concrete implementations.
 5. It uses JUnit 5
 6. It uses kotest
 7. Kotlin faker to generate faked data
+8. Uses docker to run localstack for application testing
 
 ### Features
 1. It has a simple REST API to manage employees
