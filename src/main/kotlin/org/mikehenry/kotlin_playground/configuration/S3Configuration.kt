@@ -8,6 +8,8 @@ import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider
 import software.amazon.awssdk.services.s3.S3Client
 import software.amazon.awssdk.services.s3.presigner.S3Presigner
 
+// for the moment, this configuration is not used since I am using localstack for local development
+// instead the S3ConfigurationToTest.kt is used
 @Configuration
 @ConditionalOnWebApplication
 class S3Configuration {
