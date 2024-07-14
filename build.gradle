@@ -65,16 +65,22 @@ dependencies {
 
     runtimeOnly "org.apache.tomcat.embed:tomcat-embed-core"
     runtimeOnly "org.liquibase:liquibase-core:$liquibaseVersion"
-    runtimeOnly "mysql:mysql-connector-java:8.0.28"
+    runtimeOnly 'mysql:mysql-connector-java:8.0.33'
 
     testImplementation "io.github.serpro69:kotlin-faker:$fakerVersion"
     testImplementation "com.h2database:h2"
-    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude group: 'junit', module: 'junit'
+    }
     testImplementation "io.kotest:kotest-runner-junit5:$kotestVersion"
     testImplementation "io.kotest:kotest-assertions-core:$kotestVersion"
     testImplementation "io.kotest:kotest-property:$kotestVersion"
     testImplementation "io.mockk:mockk:$mockkVersion"
 
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude group: 'junit', module: 'junit'
+    }
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
     itestImplementation "org.testcontainers:junit-jupiter:$testContainersJunitJupiterVersion"
     itestImplementation "org.testcontainers:mysql"
     itestImplementation "org.testcontainers:localstack"
