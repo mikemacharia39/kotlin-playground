@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-@TestPropertySource(locations = ["classpath:application-unittest.properties"])
+@TestPropertySource(locations = ["classpath:application-itest.properties"])
 @SpringBootTest(classes = [KotlinPlaygroundApplication::class])
 @AutoConfigureMockMvc
 class EmployeeControllerTest {
@@ -32,7 +32,7 @@ class EmployeeControllerTest {
 
     @Test
     @DisplayName("Should invoke /employee endpoint and return employee with http status 200")
-    fun `should save employee`() {
+    fun shouldSaveEmployee() {
         mockMvc.perform(
             MockMvcRequestBuilders
                 .post("/employees")
