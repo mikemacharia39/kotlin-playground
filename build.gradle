@@ -41,7 +41,7 @@ dependencies {
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
     implementation "org.zalando:jackson-datatype-problem:$zalandoJacksonProblemVersion"
 
-    implementation "io.swagger:swagger-annotations:1.5.23"
+    implementation "io.swagger:swagger-annotations:$swaggerAnnotationsVersion"
     implementation "org.zalando:problem-spring-web:$zalandoProblemVersion"
     implementation "io.github.microutils:kotlin-logging-jvm:3.0.5"
     implementation "org.apache.poi:poi-ooxml:$apachePoiVersion"
@@ -77,13 +77,15 @@ dependencies {
     testImplementation "io.kotest:kotest-property:$kotestVersion"
     testImplementation "io.mockk:mockk:$mockkVersion"
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+    itestImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude group: 'junit', module: 'junit'
     }
-    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
+    itestImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
     itestImplementation "org.testcontainers:junit-jupiter:$testContainersJunitJupiterVersion"
+    itestImplementation "io.github.serpro69:kotlin-faker:$fakerVersion"
     itestImplementation "org.testcontainers:mysql"
     itestImplementation "org.testcontainers:localstack"
+    itestImplementation "com.h2database:h2"
 }
 
 test {
