@@ -14,7 +14,7 @@ import jakarta.validation.constraints.Size
 class DepartmentRequestDto(
     @NotBlank
     @field:Size(min = 2, max = 40)
-    val departmentName: String,
+    val departmentName: String? = null,
 
     @field:Size(max = 255)
     val departmentDescription: String? = null
