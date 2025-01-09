@@ -59,6 +59,8 @@ dependencies {
     implementation platform("software.amazon.awssdk:bom:$awsSdkVersion")
     implementation "software.amazon.awssdk:s3:$awsSdkVersion"
 
+    implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:$thymeleafLayoutDialectVersion"
+
     // for now since we don't have access to aws s3 we shall use localstack
     // Using Gradle 5.0 or higher, you can use the BOM to manage the versions of the Testcontainers modules
     implementation platform("org.testcontainers:testcontainers-bom:$testContainersVersion")
