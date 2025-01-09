@@ -16,6 +16,9 @@ spring:
     username: root
     password:
 
+  jpa:
+    open-in-view: false
+
   liquibase:
     enabled: true
     changeLog: classpath:db/changelog/changelog.xml

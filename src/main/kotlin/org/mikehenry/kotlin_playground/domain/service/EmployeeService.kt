@@ -26,7 +26,7 @@ class EmployeeService(
     @Value("\${application.aws.s3.employee-document.bucket}")
     private val employeeDocumentBucket: String
 ) {
-    @Transactional(readOnly = false)
+    @Transactional
     fun addEmployee(employeeRequestDto: EmployeeRequestDto): EmployeeResponseDto {
         val employee = employeeMapper.mapDTOToEntity(employeeRequestDto)
         val response = employeeRepository.save(employee)
@@ -34,6 +34,7 @@ class EmployeeService(
         return employeeMapper.mapEntityToDTO(response)
     }
 
+    @Transactional
     fun getEmployee(employeeId: Long): EmployeeResponseDto {
         val employee = employeeRepository.findById(employeeId)
             .orElseThrow { throw NotFoundProblem("error.employee.not.found", mapOf("employeeId" to employeeId)) }
@@ -41,11 +42,13 @@ class EmployeeService(
         return employeeMapper.mapEntityToDTO(employee)
     }
 
+    @Transactional
     fun getAllEmployees(pageable: Pageable): Page<EmployeeResponseDto> {
         val employees = employeeRepository.findAll(pageable)
         return employees.map { employeeMapper.mapEntityToDTO(it) }
     }
 
+    @Transactional
     fun searchEmployees(
         employeeName: String?,
         employeeIds: List<Long>?,
@@ -59,10 +62,12 @@ class EmployeeService(
         ).map { employeeMapper.mapEntityToDTO(it) }
     }
 
+    @Transactional
     fun saveEmployeeIDDocument(employeeId: Long, file: MultipartFile) {
         s3Service.uploadFile("$EMPLOYEE_FILE_PREFIX$employeeId", file, employeeDocumentBucket)
     }
 
+    @Transactional
     fun getEmployeeIDDocument(employeeId: Long): FileDownloadResponseDto {
         return FileDownloadResponseDto(
             url = s3Service.getDownloadUrl("$EMPLOYEE_FILE_PREFIX$employeeId", employeeDocumentBucket).toString()

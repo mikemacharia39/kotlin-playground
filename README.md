@@ -24,3 +24,8 @@ As you move inward, you get more concrete implementations.
 4. The bulk upload uses apache poi to read from an excel file
 5. The upload uses coroutines to upload in parallel
 6. The upload uses kotlin flows
+7. Thymeleaf is used to render the UI on http://localhost:5001
+
+Actuator is enabled to monitor the application on http://localhost:5001/actuator/info
+
+Swagger is enabled to document the API on http://localhost:5001/swagger-ui/index.html
