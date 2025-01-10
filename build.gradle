@@ -31,6 +31,8 @@ allprojects {
 
 dependencies {
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    // Kapt processor because we need to build classes for mapstruct
     kapt "org.mapstruct:mapstruct-processor:$mapstructVersion"
 
     implementation "org.springframework.boot:spring-boot-starter-actuator"
@@ -58,6 +60,7 @@ dependencies {
     implementation platform("software.amazon.awssdk:bom:$awsSdkVersion")
     implementation "software.amazon.awssdk:s3:$awsSdkVersion"
 
+    // Thymeleaf
     implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:$thymeleafLayoutDialectVersion"
 
     // Springdoc OpenAPI
