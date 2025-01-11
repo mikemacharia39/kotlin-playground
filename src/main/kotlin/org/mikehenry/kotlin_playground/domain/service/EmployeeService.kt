@@ -1,5 +1,6 @@
 package org.mikehenry.kotlin_playground.domain.service
 
+import org.mikehenry.kotlin_playground.api.dto.params.EmployeeSearchParams
 import org.mikehenry.kotlin_playground.api.dto.request.EmployeeRequestDto
 import org.mikehenry.kotlin_playground.api.dto.response.EmployeeResponseDto
 import org.mikehenry.kotlin_playground.api.dto.response.FileDownloadResponseDto
@@ -50,15 +51,11 @@ class EmployeeService(
 
     @Transactional
     fun searchEmployees(
-        employeeName: String?,
-        employeeIds: List<Long>?,
-        phoneNumber: String?,
-        departmentName: String?,
-        address: String?,
+        employeeSearchParams: EmployeeSearchParams,
         pageable: Pageable
     ): Page<EmployeeResponseDto> {
         return employeeRepository.findAll(
-            searchEmployee(employeeName, employeeIds, phoneNumber, departmentName, address), pageable
+            searchEmployee(employeeSearchParams), pageable
         ).map { employeeMapper.mapEntityToDTO(it) }
     }
 
