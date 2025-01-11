@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse.SC_BAD_REQUEST
 import jakarta.servlet.http.HttpServletResponse.SC_FORBIDDEN
 import jakarta.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR
 import jakarta.validation.Valid
+import org.mikehenry.kotlin_playground.api.dto.params.EmployeeSearchParams
 import org.mikehenry.kotlin_playground.api.dto.request.EmployeeRequestDto
 import org.mikehenry.kotlin_playground.api.dto.request.RequestErrors
 import org.mikehenry.kotlin_playground.api.dto.response.EmployeeResponseDto
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.cloud.openfeign.SpringQueryMap
 import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
@@ -86,11 +87,7 @@ class EmployeeController(
 
     @GetMapping("/search")
     fun searchEmployees(
-        @RequestParam("employeeName", required = false) employeeName: String?,
-        @RequestParam("employeeIds", required = false) employeeIds: List<Long>?,
-        @RequestParam("phoneNumber", required = false) phoneNumber: String?,
-        @RequestParam("departmentName", required = false) departmentName: String?,
-        @RequestParam("address", required = false) address: String?,
+        @SpringQueryMap employeeSearchParams: EmployeeSearchParams,
         pageable: Pageable
-    ): Page<EmployeeResponseDto> = employeeService.searchEmployees(employeeName, employeeIds, phoneNumber, departmentName, address, pageable)
+    ): Page<EmployeeResponseDto> = employeeService.searchEmployees(employeeSearchParams, pageable)
 }
