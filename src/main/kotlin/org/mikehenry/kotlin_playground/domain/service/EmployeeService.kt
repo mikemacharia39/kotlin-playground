@@ -65,6 +65,14 @@ class EmployeeService(
     }
 
     @Transactional
+    fun deleteEmployee(employeeId: Long) {
+        if (!employeeRepository.existsById(employeeId)) {
+            throw NotFoundProblem("error.employee.not.found", mapOf("employeeId" to employeeId))
+        }
+        employeeRepository.deleteById(employeeId)
+    }
+
+    @Transactional
     fun getEmployeeIDDocument(employeeId: Long): FileDownloadResponseDto {
         return FileDownloadResponseDto(
             url = s3Service.getDownloadUrl("$EMPLOYEE_FILE_PREFIX$employeeId", employeeDocumentBucket).toString()
