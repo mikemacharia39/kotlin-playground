@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 
+/**
+ * This controller is used by the thymeleaf template engine to render the web pages.
+ */
+
 @Controller
 @RequestMapping("/")
 class HomeController(
