@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.validation.annotation.Validated
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -84,6 +85,11 @@ class EmployeeController(
 
     @GetMapping("/all")
     fun getAllEmployees(pageable: Pageable): Page<EmployeeResponseDto> = employeeService.getAllEmployees(pageable)
+
+    @DeleteMapping("/{employeeId}")
+    fun deleteEmployee(@PathVariable(name = "employeeId") employeeId: Long) {
+        employeeService.deleteEmployee(employeeId)
+    }
 
     @GetMapping("/search")
     fun searchEmployees(
